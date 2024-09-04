@@ -23,10 +23,27 @@ const GlobalStyles = createGlobalStyle`
     max-width: 100%;
   }
 
+  li {
+    list-style: none;
+  }
+
   button {
     display: block;
     border: none;
     outline: none;
+  } 
+
+  .container {
+    padding: 60px 60px;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  .app-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+    gap: 20px;
   }
 `;
 
