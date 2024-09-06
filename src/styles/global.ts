@@ -34,16 +34,24 @@ const GlobalStyles = createGlobalStyle`
   } 
 
   .container {
-    padding: 60px 60px;
-    max-width: 1240px;
+    padding: 60px;
+    max-width: 1440px;
     margin: 0 auto;
+
+    @media screen and (max-width: 800px) {
+      padding: 30px;
+    }
   }
 
   .app-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
     align-items: start;
-    gap: 20px;
+    gap: 30px;
+
+    @media screen and (max-width: 1000px) {
+      grid-template-columns: 1fr;
+    }
   }
 `;
 

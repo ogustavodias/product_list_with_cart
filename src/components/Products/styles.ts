@@ -12,6 +12,14 @@ export const List = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+
+  @media screen and (max-width: 800px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media screen and (max-width: 500px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const Card = styled.li`
@@ -23,7 +31,7 @@ export const Card = styled.li`
 
     button {
       position: absolute;
-      bottom: -19.5px;
+      bottom: -27px;
     }
 
     img {

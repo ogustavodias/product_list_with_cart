@@ -12,7 +12,7 @@ const Products = () => {
         <S.Card>
           <div>
             <img src={productIcon} alt="" />
-            <ProductButton count={0} />
+            <ProductButton count={2} />
           </div>
           <div>
             <S.Category>Waffle</S.Category>

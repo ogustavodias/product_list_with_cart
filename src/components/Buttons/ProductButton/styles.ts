@@ -5,11 +5,12 @@ const inCommon = css`
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px;
+  padding: 16px 8px;
   border: 1px solid ${colors.red};
   border-radius: 20px;
   width: 100%;
   max-width: 60%;
+  font-size: 14px;
 `;
 
 export const NotInCartButton = styled.button`

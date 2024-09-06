@@ -50,7 +50,7 @@ export const UnitPrice = styled.span`
 export const TotalProductPrice = styled.span`
   font-size: 14px;
   font-weight: 600;
-  color: ${colors.rose400};
+  color: ${colors.rose500};
 `;
 
 export const Control = styled.div`
@@ -67,5 +67,73 @@ export const Control = styled.div`
   transition: color 0.3s;
   &:hover {
     color: ${colors.rose900};
+  }
+`;
+
+export const TotalOfOrder = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+
+  > span:first-child {
+    color: ${colors.rose500};
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  > span:last-child {
+    color: ${colors.rose900};
+    font-weight: 700;
+    font-size: 32px;
+  }
+`;
+
+export const CarbonMessage = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background-color: ${colors.rose100};
+  border-radius: 8px;
+  padding: 15px;
+  margin: 20px 0;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: ${colors.rose900};
+
+  strong {
+    font-size: inherit;
+    font-weight: 700;
+  }
+`;
+
+export const Button = styled.button`
+  font-weight: 600;
+  color: ${colors.rose100};
+  padding: 16px 8px;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 100%;
+  background-color: ${colors.red};
+
+  transition: filter 0.3s;
+  &:hover {
+    filter: brightness(80%);
+  }
+`;
+
+export const EmptyBlock = styled.div`
+  text-align: center;
+
+  img {
+    margin: 0 auto 20px;
+  }
+
+  p {
+    font-weight: 600;
+    font-size: 14px;
+    color: ${colors.rose400};
   }
 `;
