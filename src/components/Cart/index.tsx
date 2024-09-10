@@ -1,60 +1,47 @@
-import RemoveSVG from "./RemoveSVG";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/configureStore";
 
-import carbonIcon from "../../assets/images/icon-carbon-neutral.svg";
-import emptyIllustration from "../../assets/images/illustration-empty-cart.svg";
+import RemoveSVG from "./RemoveSVG";
+import carbonIcon from "/assets/images/icon-carbon-neutral.svg";
+import emptyIllustration from "/assets/images/illustration-empty-cart.svg";
 
 import * as S from "./styles";
-
-const teste = 0;
+import { toCurrency } from "../../helper/toCurrency";
+import { remove } from "../../redux/reducers/cart";
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const { products } = useSelector((state: RootState) => state.cart);
+
   return (
     <S.Wrapper>
       <S.Title>Your Cart (7)</S.Title>
 
-      {teste ? (
+      {products.length ? (
         <>
-          <li>
-            <S.Item>
-              <div>
-                <S.Name>Classic Tiramisu</S.Name>
-                <S.Details>
-                  <S.Quantity>1x</S.Quantity>
-                  <S.UnitPrice>@ $5.50</S.UnitPrice>
-                  <S.TotalProductPrice>$5.50</S.TotalProductPrice>
-                </S.Details>
-              </div>
-              <S.Control>
-                <RemoveSVG />
-              </S.Control>
-            </S.Item>
-            <S.Item>
-              <div>
-                <S.Name>Classic Tiramisu</S.Name>
-                <S.Details>
-                  <S.Quantity>1x</S.Quantity>
-                  <S.UnitPrice>@ $5.50</S.UnitPrice>
-                  <S.TotalProductPrice>$5.50</S.TotalProductPrice>
-                </S.Details>
-              </div>
-              <S.Control>
-                <RemoveSVG />
-              </S.Control>
-            </S.Item>
-            <S.Item>
-              <div>
-                <S.Name>Classic Tiramisu</S.Name>
-                <S.Details>
-                  <S.Quantity>1x</S.Quantity>
-                  <S.UnitPrice>@ $5.50</S.UnitPrice>
-                  <S.TotalProductPrice>$5.50</S.TotalProductPrice>
-                </S.Details>
-              </div>
-              <S.Control>
-                <RemoveSVG />
-              </S.Control>
-            </S.Item>
-          </li>
+          <ul>
+            {products.map((product) => {
+              return (
+                <S.Item key={product.name}>
+                  <div>
+                    <S.Name>{product.name}</S.Name>
+                    <S.Details>
+                      <S.Quantity>{product.quantity}</S.Quantity>
+                      <S.UnitPrice>
+                        @ {toCurrency(product.unitPrice)}
+                      </S.UnitPrice>
+                      <S.TotalProductPrice>
+                        {toCurrency(product.unitPrice * product.quantity)}
+                      </S.TotalProductPrice>
+                    </S.Details>
+                  </div>
+                  <S.Control onClick={() => dispatch(remove(product))}>
+                    <RemoveSVG />
+                  </S.Control>
+                </S.Item>
+              );
+            })}
+          </ul>
           <S.TotalOfOrder>
             <span>Order Total</span>
             <span>$46.50</span>

@@ -1,6 +1,9 @@
 import { ButtonHTMLAttributes } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { decrease, increase } from "../../../redux/reducers/cart";
+import { RootState } from "../../../redux/configureStore";
 
-import cartIcon from "../../../assets/images/icon-add-to-cart.svg";
+import cartIcon from "/assets/images/icon-add-to-cart.svg";
 
 import IncrementSVG from "./IncrementSVG";
 import DecrementSVG from "./DecrementSVG";
@@ -8,11 +11,18 @@ import DecrementSVG from "./DecrementSVG";
 import * as S from "./styles";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  count: number;
+  product: IProduct;
 }
 
-const ProductButton = ({ count, ...props }: Props) => {
-  if (!count)
+const ProductButton = ({ product, ...props }: Props) => {
+  const dispatch = useDispatch();
+  const teste = useSelector((state: RootState) =>
+    state.cart.products.find((item) => item.name === product.name)
+  );
+
+  console.log(teste?.quantity);
+
+  if (!teste?.quantity)
     return (
       <S.NotInCartButton {...props}>
         <img src={cartIcon} alt="" />
@@ -22,11 +32,11 @@ const ProductButton = ({ count, ...props }: Props) => {
 
   return (
     <S.InCartButton>
-      <S.Option>
+      <S.Option onClick={() => dispatch(decrease(product))}>
         <DecrementSVG />
       </S.Option>
-      {count}
-      <S.Option>
+      {teste.quantity}
+      <S.Option onClick={() => dispatch(increase(product))}>
         <IncrementSVG />
       </S.Option>
     </S.InCartButton>
