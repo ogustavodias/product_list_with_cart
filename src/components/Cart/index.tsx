@@ -12,10 +12,15 @@ import { remove } from "../../redux/reducers/cart";
 const Cart = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state: RootState) => state.cart);
+  const totalQuantity = products.reduce((acc, item) => acc + item.quantity, 0);
+  const totalPrice = products.reduce(
+    (acc, item) => acc + item.unitPrice * item.quantity,
+    0
+  );
 
   return (
     <S.Wrapper>
-      <S.Title>Your Cart (7)</S.Title>
+      <S.Title>Your Cart ({totalQuantity})</S.Title>
 
       {products.length ? (
         <>
@@ -44,7 +49,7 @@ const Cart = () => {
           </ul>
           <S.TotalOfOrder>
             <span>Order Total</span>
-            <span>$46.50</span>
+            <span>{toCurrency(totalPrice)}</span>
           </S.TotalOfOrder>
           <S.CarbonMessage>
             <img src={carbonIcon} alt="tree icon" />

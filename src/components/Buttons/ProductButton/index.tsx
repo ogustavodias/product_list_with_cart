@@ -20,8 +20,6 @@ const ProductButton = ({ product, ...props }: Props) => {
     state.cart.products.find((item) => item.name === product.name)
   );
 
-  console.log(teste?.quantity);
-
   if (!teste?.quantity)
     return (
       <S.NotInCartButton {...props}>
