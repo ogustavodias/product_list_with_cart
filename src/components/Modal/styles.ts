@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: transform .3s;
 `;
 
 export const Card = styled.div`

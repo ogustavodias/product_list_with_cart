@@ -109,14 +109,14 @@ export const CarbonMessage = styled.p`
   }
 `;
 
-export const Button = styled.button`
+export const Button = styled.button<{ $confirmed: boolean }>`
   font-weight: 600;
   color: ${colors.rose100};
   padding: 16px 8px;
   border-radius: 20px;
   cursor: pointer;
   width: 100%;
-  background-color: ${colors.red};
+  background-color: ${(props) => (props.$confirmed ? colors.green : colors.red)};
 
   transition: filter 0.3s;
   &:hover {

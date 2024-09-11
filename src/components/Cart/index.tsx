@@ -1,22 +1,31 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/configureStore";
+import { remove, confirm } from "../../redux/reducers/cart";
+import { open } from "../../redux/reducers/modal";
+
+import { toCurrency } from "../../helper/toCurrency";
 
 import RemoveSVG from "./RemoveSVG";
 import carbonIcon from "/assets/images/icon-carbon-neutral.svg";
 import emptyIllustration from "/assets/images/illustration-empty-cart.svg";
 
 import * as S from "./styles";
-import { toCurrency } from "../../helper/toCurrency";
-import { remove } from "../../redux/reducers/cart";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const { products } = useSelector((state: RootState) => state.cart);
+  const { products, confirmed } = useSelector((state: RootState) => state.cart);
   const totalQuantity = products.reduce((acc, item) => acc + item.quantity, 0);
   const totalPrice = products.reduce(
     (acc, item) => acc + item.unitPrice * item.quantity,
     0
   );
+
+  function handleButton() {
+    if (!confirmed) dispatch(confirm());
+
+    // else
+    dispatch(open());
+  }
 
   return (
     <S.Wrapper>
@@ -40,7 +49,10 @@ const Cart = () => {
                       </S.TotalProductPrice>
                     </S.Details>
                   </div>
-                  <S.Control onClick={() => dispatch(remove(product))}>
+                  <S.Control
+                    onClick={() => dispatch(remove(product))}
+                    style={{ display: confirmed ? "none" : "flex" }}
+                  >
                     <RemoveSVG />
                   </S.Control>
                 </S.Item>
@@ -55,7 +67,9 @@ const Cart = () => {
             <img src={carbonIcon} alt="tree icon" />
             This is a<strong>carbon-neutral</strong>delivery
           </S.CarbonMessage>
-          <S.Button>Confirm Order</S.Button>{" "}
+          <S.Button $confirmed={confirmed} onClick={handleButton}>
+            {confirmed ? "See Order" : "Confirm Order"}
+          </S.Button>
         </>
       ) : (
         <S.EmptyBlock>

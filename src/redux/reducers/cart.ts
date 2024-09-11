@@ -42,9 +42,16 @@ const cartSlice = createSlice({
           (item) => item.name !== action.payload.name
         );
     },
+    confirm(state) {
+      state.confirmed = true;
+    },
+    reset(state) {
+      state.products = [];
+      state.confirmed = false;
+    },
   },
 });
 
-export const { add, remove, increase, decrease } = cartSlice.actions;
+export const { add, remove, increase, decrease, confirm, reset } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import apiSlice from "../services/api";
 import cart from "./reducers/cart";
+import modal from "./reducers/modal";
 
 const store = configureStore({
   reducer: {
     cart,
+    modal,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

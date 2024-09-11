@@ -1,11 +1,37 @@
-import confirmedIcon from "../../assets/images/icon-order-confirmed.svg";
-import thumb from "../../assets/images/image-baklava-thumbnail.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/configureStore";
+import { close } from "../../redux/reducers/modal";
+import { reset } from "../../redux/reducers/cart";
+
+import { toCurrency } from "../../helper/toCurrency";
+
+import confirmedIcon from "/assets/images/icon-order-confirmed.svg";
 
 import * as S from "./styles";
 
 const Modal = () => {
+  const dispatch = useDispatch();
+  const { products } = useSelector((state: RootState) => state.cart);
+  const { openned } = useSelector((state: RootState) => state.modal);
+  const totalPrice = products.reduce(
+    (acc, item) => acc + item.unitPrice * item.quantity,
+    0
+  );
+
+  function handleButton() {
+    dispatch(close());
+    dispatch(reset());
+  }
+
+  function checkOutClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    if (e.target === e.currentTarget) dispatch(close());
+  }
+
   return (
-    <S.Wrapper>
+    <S.Wrapper
+      style={{ transform: openned ? "scale(1)" : "scale(0)" }}
+      onClick={checkOutClick}
+    >
       <S.Card>
         <S.Header>
           <img src={confirmedIcon} alt="Confirmed icon" />
@@ -14,40 +40,28 @@ const Modal = () => {
         </S.Header>
         <S.Resume>
           <S.List>
-            <S.Item>
-              <S.Thumb src={thumb} alt="thumb" />
-              <div>
-                <S.Name>Classic Tiramisu</S.Name>
-                <S.Quantity>1x</S.Quantity>
-                <S.UnitPrice>@ $5.50</S.UnitPrice>
-              </div>
-              <S.TotalOfProduct>$5.50</S.TotalOfProduct>
-            </S.Item>
-            <S.Item>
-              <S.Thumb src={thumb} alt="thumb" />
-              <div>
-                <S.Name>Classic Tiramisu</S.Name>
-                <S.Quantity>1x</S.Quantity>
-                <S.UnitPrice>@ $5.50</S.UnitPrice>
-              </div>
-              <S.TotalOfProduct>$5.50</S.TotalOfProduct>
-            </S.Item>
-            <S.Item>
-              <S.Thumb src={thumb} alt="thumb" />
-              <div>
-                <S.Name>Classic Tiramisu</S.Name>
-                <S.Quantity>1x</S.Quantity>
-                <S.UnitPrice>@ $5.50</S.UnitPrice>
-              </div>
-              <S.TotalOfProduct>$5.50</S.TotalOfProduct>
-            </S.Item>
+            {products.map((item) => {
+              return (
+                <S.Item key={item.name}>
+                  <S.Thumb src={item.imgs.thumbnail} alt={item.name} />
+                  <div>
+                    <S.Name>{item.name}</S.Name>
+                    <S.Quantity>{item.quantity}x</S.Quantity>
+                    <S.UnitPrice>@ {toCurrency(item.unitPrice)}</S.UnitPrice>
+                  </div>
+                  <S.TotalOfProduct>
+                    {toCurrency(item.unitPrice * item.quantity)}
+                  </S.TotalOfProduct>
+                </S.Item>
+              );
+            })}
           </S.List>
           <S.TotalOfOrder>
             <span>Order Total</span>
-            <span>$46.50</span>
+            <span>{toCurrency(totalPrice)}</span>
           </S.TotalOfOrder>
         </S.Resume>
-        <S.Button>Start New Order</S.Button>
+        <S.Button onClick={handleButton}>Start New Order</S.Button>
       </S.Card>
     </S.Wrapper>
   );

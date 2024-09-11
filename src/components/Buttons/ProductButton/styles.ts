@@ -24,6 +24,12 @@ export const NotInCartButton = styled.button`
   &:hover {
     color: ${colors.red};
   }
+
+  &:disabled {
+    color: inherit;
+    cursor: initial;
+    opacity: 0;
+  }
 `;
 
 export const InCartButton = styled.button`
@@ -36,7 +42,6 @@ export const InCartButton = styled.button`
 export const Option = styled.div`
   height: 20px;
   width: 20px;
-  display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid ${colors.rose100};

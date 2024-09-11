@@ -11,7 +11,7 @@ function App() {
       <div className="container app-grid">
         <Products />
         <Cart />
-        {/* <Modal /> */}
+        <Modal />
       </div>
     </>
   );

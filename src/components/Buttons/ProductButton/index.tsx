@@ -16,25 +16,34 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const ProductButton = ({ product, ...props }: Props) => {
   const dispatch = useDispatch();
-  const teste = useSelector((state: RootState) =>
-    state.cart.products.find((item) => item.name === product.name)
-  );
+  const { products, confirmed } = useSelector((state: RootState) => state.cart);
+  const quantity = products.find(
+    (item) => item.name === product.name
+  )?.quantity;
 
-  if (!teste?.quantity)
+  if (!quantity)
     return (
-      <S.NotInCartButton {...props}>
+      <S.NotInCartButton {...props} disabled={confirmed}>
         <img src={cartIcon} alt="" />
         Add to Cart
       </S.NotInCartButton>
     );
 
   return (
-    <S.InCartButton>
-      <S.Option onClick={() => dispatch(decrease(product))}>
+    <S.InCartButton
+      style={{ justifyContent: confirmed ? "center" : "space-between" }}
+    >
+      <S.Option
+        onClick={() => dispatch(decrease(product))}
+        style={{ display: confirmed ? "none" : "flex" }}
+      >
         <DecrementSVG />
       </S.Option>
-      {teste.quantity}
-      <S.Option onClick={() => dispatch(increase(product))}>
+      {quantity}
+      <S.Option
+        onClick={() => dispatch(increase(product))}
+        style={{ display: confirmed ? "none" : "flex" }}
+      >
         <IncrementSVG />
       </S.Option>
     </S.InCartButton>
